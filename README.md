@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# BoardIt - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend för BoardIt – en intern nyhets- och anslagstavla för personal.
 
-Currently, two official plugins are available:
+Byggt som del av en skoluppgift och redovisas via videopresentation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tekniker
 
-## React Compiler
+- React 18
+- TypeScript
+- React Router DOM
+- Axios
+- Vite
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Funktionalitet
 
-## Expanding the ESLint configuration
+### Publika sidor
+- **Startsida** (`/`) - Listar alla inlägg med klickbara kort
+- **Detaljsida** (`/posts/:id`) - Visar fullständigt innehåll för enskilt inlägg
+- **Inloggning** (`/login`) - Formulär för autentisering
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Skyddad sida (kräver inloggning)
+- **Admin** (`/admin`) - Skapa och ta bort inlägg
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Autentisering
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- JWT-token lagras i `localStorage`
+- Token skickas automatiskt i Authorization-header via Axios interceptor
+- Skyddade routes redirectar till login om användaren inte är autentiserad
+- Navbar visar inloggningsstatus (logga in/logga ut-knapp beroende på status)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Kom igång
+
+Installera beroenden:
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Starta utvecklingsserver:
+```bash
+npm run dev
 ```
+
+Applikationen startar på `http://localhost:5173`
+
+**Backend krävs:** Se till att BoardAPI körs på `http://localhost:5260`
+
+**Inloggningsuppgifter:**
+- Användarnamn: `admin`
+- Lösenord: `admin123`
