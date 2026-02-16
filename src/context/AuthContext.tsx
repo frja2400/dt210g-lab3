@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom'
 // Skapar en Context för autentisering
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-// Provider-komponent som hanterar autentisering och tillhandahåller token, login och logout funktioner, samt isAuthenticated boolean
+// Provider-komponent som hanterar autentisering och tillhandahåller token, login och logout funktioner, isAuthenticated och loading boolean
 export function AuthProvider({ children }: { children: ReactNode }) {
-    // State för att lagra token
     const [token, setToken] = useState<string | null>(null)
+    const [loading, setLoading] = useState(true)
 
     const navigate = useNavigate()
 
@@ -19,6 +19,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (savedToken) {
             setToken(savedToken)
         }
+        setLoading(false)
     }, [])
 
     // Funktion för att logga in, som skickar en POST-förfrågan till backend och hanterar token
@@ -47,7 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const isAuthenticated = !!token
 
     return (
-        <AuthContext.Provider value={{ token, login, logout, isAuthenticated }}>
+        <AuthContext.Provider value={{ token, login, logout, isAuthenticated, loading }}>
             {children}
         </AuthContext.Provider>
     )

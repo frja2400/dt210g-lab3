@@ -11,10 +11,11 @@ export interface User {
     password: string;
 }
 
-// Definierar vad AuthContext ska innehålla (token, login och logout funktioner, isAuthenticated boolean)
+// Definierar vad AuthContext ska innehålla (token, login och logout funktioner, isAuthenticated och loading boolean)
 export interface AuthContextType {
     token: string | null;
     login: (username: string, password: string) => Promise<void>;
     logout: () => void;
     isAuthenticated: boolean;
+    loading: boolean;
 }
