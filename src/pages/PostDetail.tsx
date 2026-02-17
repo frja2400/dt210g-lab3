@@ -29,24 +29,25 @@ function PostDetail() {
         fetchPost()
     }, [id])
 
-    if (loading) return <div style={{ padding: '2rem' }}>Laddar...</div>
-    if (error) return <div style={{ padding: '2rem', color: 'red' }}>{error}</div>
-    if (!post) return <div style={{ padding: '2rem' }}>Inlägget hittades inte</div>
+    if (loading) return <div className="status">Laddar...</div>
+    if (error) return <div className="status status--error">{error}</div>
+    if (!post) return <div className="status">Inlägget hittades inte</div>
 
     return (
-        <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
-            <button
-                onClick={() => navigate('/')}
-                style={{ marginBottom: '1rem', padding: '0.5rem 1rem', cursor: 'pointer' }}
-            >
-                ← Tillbaka
-            </button>
-            <h1>{post.title}</h1>
-            <p style={{ color: '#666', fontSize: '0.9rem' }}>
-                <strong>{post.category}</strong> | {new Date(post.createdAt).toLocaleDateString('sv-SE')}
-            </p>
-            <div style={{ marginTop: '2rem', lineHeight: '1.6' }}>
-                {post.content}
+        <div className="container">
+            <div className="post-detail">
+                <button className="btn btn--outline" onClick={() => navigate('/')}>
+                    ← TILLBAKA
+                </button>
+                <h1 style={{ marginTop: '1.5rem' }}>{post.title}</h1>
+                <p className="post-detail__meta">
+                    <span className="post-detail__category">{post.category}</span>
+                    {' '}&bull;{' '}
+                    {new Date(post.createdAt).toLocaleDateString('sv-SE')}
+                </p>
+                <div className="post-detail__content">
+                    {post.content}
+                </div>
             </div>
         </div>
     )

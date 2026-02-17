@@ -12,7 +12,7 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
 
     // Vänta tills vi vet om användaren är inloggad
     if (loading) {
-        return <div style={{ padding: '2rem' }}>Laddar...</div>
+        return <div className="status">Laddar...</div>
     }
 
     if (!isAuthenticated) {

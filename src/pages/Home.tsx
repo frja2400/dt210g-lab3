@@ -27,11 +27,11 @@ function Home() {
         fetchPosts()
     }, [])
 
-    if (loading) return <div style={{ padding: '2rem' }}>Laddar...</div>
-    if (error) return <div style={{ padding: '2rem', color: 'red' }}>{error}</div>
+    if (loading) return <div className="status">Laddar...</div>
+    if (error) return <div className="status status--error">{error}</div>
 
     return (
-        <div style={{ padding: '2rem' }}>
+        <div className="container">
             <h1>Senaste nyheterna</h1>
             {posts.length === 0 ? (
                 <p>Inga inlägg ännu.</p>
@@ -40,21 +40,16 @@ function Home() {
                     {posts.map((post) => (
                         <div
                             key={post.id}
+                            className="post-card"
                             onClick={() => navigate(`/posts/${post.id}`)}
-                            style={{
-                                border: '1px solid #ddd',
-                                padding: '1rem',
-                                marginBottom: '1rem',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                transition: 'background-color 0.2s'
-                            }}
-                            >
-                            <h2 style={{ margin: '0 0 0.5rem 0' }}>{post.title}</h2>
-                            <p style={{ color: '#666', fontSize: '0.9rem', margin: '0 0 0.5rem 0' }}>
-                                <strong>{post.category}</strong> | {new Date(post.createdAt).toLocaleDateString('sv-SE')}
+                        >
+                            <h2 className="post-card__title">{post.title}</h2>
+                            <p className="post-card__meta">
+                                <span className="post-card__category">{post.category}</span>
+                                {' '}&bull;{' '}
+                                {new Date(post.createdAt).toLocaleDateString('sv-SE')}
                             </p>
-                            <p style={{ margin: 0 }}>
+                            <p className="post-card__excerpt">
                                 {post.content.substring(0, 150)}{post.content.length > 150 ? '...' : ''}
                             </p>
                         </div>

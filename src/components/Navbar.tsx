@@ -5,19 +5,19 @@ function Navbar() {
     const { isAuthenticated, logout } = useAuth()
 
     return (
-        <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-                <Link to="/" style={{ marginRight: '1rem' }}>Hem</Link>
-                {isAuthenticated && <Link to="/admin" style={{ marginRight: '1rem' }}>Admin</Link>}
-            </div>
-            <div>
-                {isAuthenticated ? (
-                    <>
-                        <button onClick={logout}>Logga ut</button>
-                    </>
-                ) : (
-                    <Link to="/login">Logga in</Link>
-                )}
+        <nav className="navbar">
+            <div className="navbar__inner">
+                <div className="navbar__links">
+                    <Link to="/">HEM</Link>
+                    {isAuthenticated && <Link to="/admin">ADMIN</Link>}
+                </div>
+                <div className="navbar__auth">
+                    {isAuthenticated ? (
+                        <button className="btn--login" onClick={logout}>LOGGA UT</button>
+                    ) : (
+                        <Link to="/login" className="btn--login">LOGGA IN</Link>
+                    )}
+                </div>
             </div>
         </nav>
     )

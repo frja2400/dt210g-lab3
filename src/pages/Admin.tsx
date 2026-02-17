@@ -59,77 +59,54 @@ function Admin() {
         }
     }
 
-    if (loading) return <div style={{ padding: '2rem' }}>Laddar...</div>
-    if (error) return <div style={{ padding: '2rem', color: 'red' }}>{error}</div>
+    if (loading) return <div className="status">Laddar...</div>
+    if (error) return <div className="status status--error">{error}</div>
 
     return (
-        <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
+        <div className="container">
             <h1>Hantera inlägg</h1>
 
             {/* Formulär för att skapa nytt inlägg */}
-            <div style={{
-                border: '2px solid #007bff',
-                padding: '1.5rem',
-                marginBottom: '2rem',
-                borderRadius: '4px',
-                backgroundColor: '#f8f9fa'
-            }}>
+            <div className="admin-form-box">
                 <h2>Skapa nytt inlägg</h2>
-                <form onSubmit={handleCreatePost}>
-                    <div style={{ marginBottom: '1rem' }}>
-                        <label>
-                            Titel:
-                            <input
-                                type="text"
-                                value={title}
-                                onChange={(e) => {
-                                    setTitle(e.target.value)
-                                    setFormError('')
-                                }}
-                                style={{ display: 'block', width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
-                                required
-                            />
-                        </label>
+                <form onSubmit={handleCreatePost} style={{ marginTop: '1rem' }}>
+                    <div className="form-group">
+                        <label htmlFor="title">Titel</label>
+                        <input
+                            id="title"
+                            type="text"
+                            value={title}
+                            onChange={(e) => { setTitle(e.target.value); setFormError('') }}
+                            required
+                        />
                     </div>
-                    <div style={{ marginBottom: '1rem' }}>
-                        <label>
-                            Kategori:
-                            <select
-                                value={category}
-                                onChange={(e) => {
-                                    setCategory(e.target.value)
-                                    setFormError('')
-                                }}
-                                style={{ display: 'block', width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
-                                required
-                            >
-                                <option value="">Välj kategori...</option>
-                                <option value="Info">Info</option>
-                                <option value="Viktigt">Viktigt</option>
-                                <option value="Event">Event</option>
-                                <option value="Underhåll">Underhåll</option>
-                            </select>
-                        </label>
+                    <div className="form-group">
+                        <label htmlFor="category">Kategori</label>
+                        <select
+                            id="category"
+                            value={category}
+                            onChange={(e) => { setCategory(e.target.value); setFormError('') }}
+                            required
+                        >
+                            <option value="">Välj kategori...</option>
+                            <option value="Info">Info</option>
+                            <option value="Viktigt">Viktigt</option>
+                            <option value="Event">Event</option>
+                            <option value="Underhåll">Underhåll</option>
+                        </select>
                     </div>
-                    <div style={{ marginBottom: '1rem' }}>
-                        <label>
-                            Innehåll:
-                            <textarea
-                                value={content}
-                                onChange={(e) => {
-                                    setContent(e.target.value)
-                                    setFormError('')
-                                }}
-                                rows={6}
-                                style={{ display: 'block', width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
-                                required
-                            />
-                        </label>
+                    <div className="form-group">
+                        <label htmlFor="content">Innehåll</label>
+                        <textarea
+                            id="content"
+                            value={content}
+                            onChange={(e) => { setContent(e.target.value); setFormError('') }}
+                            rows={6}
+                            required
+                        />
                     </div>
-                    {formError && <p style={{ color: 'red' }}>{formError}</p>}
-                    <button type="submit" style={{ padding: '0.5rem 1.5rem', cursor: 'pointer' }}>
-                        Skapa inlägg
-                    </button>
+                    {formError && <p className="form-error">{formError}</p>}
+                    <button type="submit" className="btn btn--primary">Skapa inlägg</button>
                 </form>
             </div>
 
@@ -140,36 +117,21 @@ function Admin() {
             ) : (
                 <div>
                     {posts.map((post) => (
-                        <div key={post.id} style={{
-                            border: '1px solid #ddd',
-                            padding: '1rem',
-                            marginBottom: '1rem',
-                            borderRadius: '4px',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
-                        }}>
-                            <div style={{ flex: 1 }}>
-                                <h3 style={{ margin: '0 0 0.5rem 0' }}>{post.title}</h3>
-                                <p style={{ color: '#666', fontSize: '0.9rem', margin: 0 }}>
-                                    <strong>{post.category}</strong> | {new Date(post.createdAt).toLocaleDateString('sv-SE')}
+                        <div key={post.id} className="admin-post-item">
+                            <div className="admin-post-item__info">
+                                <h3>{post.title}</h3>
+                                <p className="admin-post-item__meta">
+                                    <span className="admin-post-item__category">{post.category}</span>
+                                    {' '}&bull;{' '}
+                                    {new Date(post.createdAt).toLocaleDateString('sv-SE')}
                                 </p>
-                                <div style={{ marginTop: '2rem', lineHeight: '1.6' }}>
-                                    {post.content}
-                                </div>
+                                <p className="admin-post-item__content">{post.content}</p>
                             </div>
                             <button
+                                className="btn btn--danger"
                                 onClick={() => handleDelete(post.id)}
-                                style={{
-                                    padding: '0.5rem 1rem',
-                                    backgroundColor: '#dc3545',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '4px',
-                                    cursor: 'pointer'
-                                }}
                             >
-                                Ta bort
+                                TA BORT
                             </button>
                         </div>
                     ))}
